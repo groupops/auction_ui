@@ -1,33 +1,26 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Dmytro_Ulanovych
-  Date: 10/27/2015
-  Time: 5:47 PM
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-    <title>Login</title>
-    <%@include file="includes.jsp" %>
-</head>
 <body>
-Hi from login!
+	<h1>HOME PAGE</h1>
+	This is index page with cool content.
 
-<form action="">
-    <p>
-        <jsp:text>Name</jsp:text>
-        <input name="name" type="text"/>
+	<c:if test="${pageContext.request.userPrincipal.name != null}">
+		<h3>You are logged in. Welcome : ${pageContext.request.userPrincipal.name}</h3>
+		<br>
+		<form action="<c:url value="/logout"/>" method="post" id="logoutForm">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+			<input name="submit" type="submit" value="LOGOUT" />
+		</form>
+		<br>
+	</c:if>
 
-    </p>
-
-    <p>
-        <jsp:text>Password</jsp:text>
-        <input name="password" type="text"/>
-    </p>
-
-    <input type="submit" value="Login" title="Login"/>
-</form>
-
+	<c:if test="${pageContext.request.userPrincipal.name == null}">
+		You have to log in first.
+		<br>
+		<a href="<c:url value="/login"/>">LOGIN</a>
+		<br>
+		<a href="<c:url value="/register"/>">REGISTER</a>
+	</c:if>
 </body>
 </html>

@@ -2,6 +2,7 @@ package com.epam.training.auction;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 public class ServletInitializer extends SpringBootServletInitializer {
 
