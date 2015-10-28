@@ -17,7 +17,7 @@ public class UserController {
     
     @RequestMapping(method = RequestMethod.GET, value = "/")
     public String index() {
-        return "index";
+        return "auctions";
     }
     
     @RequestMapping(method = RequestMethod.GET, value = "/login")
