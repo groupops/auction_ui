@@ -16,7 +16,7 @@ import com.epam.training.auction.service.AuthService;
 public class AuthController {
     
     @Autowired
-    AuthService authService;
+    private AuthService authService;
     
     @RequestMapping(method = RequestMethod.GET, value = "/")
     public String auctions() {

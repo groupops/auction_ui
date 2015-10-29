@@ -9,10 +9,10 @@ import com.epam.training.auction.common.UserTransferObject;
 @Service
 public class AuthServiceImpl implements AuthService{
 
-    UserService userService;
+    private UserService userService;
     
     @Autowired
-    BCryptPasswordEncoder bCryptPasswordEncoder;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
     
     @Override
     public void registerUser(String username, String password) {
