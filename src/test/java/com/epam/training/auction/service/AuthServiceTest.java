@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.epam.training.auction.AuctionWebApplication;
+import com.epam.training.auction.common.UsersService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = AuctionWebApplication.class)
@@ -23,17 +24,17 @@ public class AuthServiceTest {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     
-    private UserService userService;
+    private UsersService usersService;
     
     @Test
     public void userAppearsInDatabaseAfterRegistration(){
         authService.registerUser("Mateusz", "NotBreakablePassword");
-        assertNotNull(userService.getUserByName("Mateusz"));
+        assertNotNull(usersService.getUserByName("Mateusz"));
     }
     
     @Test
     public void passwordHashedCorrectly(){
         authService.registerUser("Mateusz", "NotBreakablePassword");
-        assertEquals(bCryptPasswordEncoder.encode("NotBreakablePassword"), userService.getUserByName("Mateusz").get().getPassword());
+        assertEquals(bCryptPasswordEncoder.encode("NotBreakablePassword"), usersService.getUserByName("Mateusz").get().getPassword());
     }
 }

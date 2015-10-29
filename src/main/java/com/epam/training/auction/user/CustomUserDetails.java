@@ -6,8 +6,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.epam.training.auction.common.UserTransferObject;
-
 public final class CustomUserDetails extends User implements UserDetails {
 
     private static final long serialVersionUID = -4261337858630172703L;

@@ -5,18 +5,19 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.epam.training.auction.common.UserTransferObject;
+import com.epam.training.auction.common.UsersService;
 
 @Service
 public final class AuthServiceImpl implements AuthService{
 
-    private UserService userService;
+    private UsersService usersService;
     
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     
     @Override
     public void registerUser(String username, String password) {
-        userService.addUser(new UserTransferObject(-1, username, bCryptPasswordEncoder.encode(password)));
+        usersService.addUser(new UserTransferObject(-1, username, bCryptPasswordEncoder.encode(password)));
     }
 
 }
