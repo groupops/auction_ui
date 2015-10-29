@@ -12,7 +12,7 @@ import java.util.List;
  * Created by Dmytro_Ulanovych on 10/27/2015.
  */
 @RestController
-public class AuctionRESTController {
+public final class AuctionRESTController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/auctions")
     public List<String> getAuctions() {

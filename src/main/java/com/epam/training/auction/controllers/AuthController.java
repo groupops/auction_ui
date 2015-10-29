@@ -13,7 +13,7 @@ import com.epam.training.auction.service.AuthService;
  * Created by Dmytro_Ulanovych on 10/27/2015.
  */
 @Controller
-public class AuthController {
+public final class AuthController {
     
     @Autowired
     private AuthService authService;

@@ -1,4 +1,4 @@
-package com.epam.training.auction;
+package com.epam.training.auction.user;
 
 import java.util.Collection;
 
@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.epam.training.auction.common.UserTransferObject;
 
-public class CustomUserDetails extends UserTransferObject implements UserDetails {
+public final class CustomUserDetails extends User implements UserDetails {
 
     private static final long serialVersionUID = -4261337858630172703L;
     
@@ -16,7 +16,7 @@ public class CustomUserDetails extends UserTransferObject implements UserDetails
         super(id, username, password);
     }
     
-    public CustomUserDetails(UserTransferObject user){
+    public CustomUserDetails(User user){
         super(user.getId(), user.getUsername(), user.getPassword());
     }
 

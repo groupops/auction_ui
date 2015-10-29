@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import com.epam.training.auction.common.UserTransferObject;
 
 @Service
-public class AuthServiceImpl implements AuthService{
+public final class AuthServiceImpl implements AuthService{
 
     private UserService userService;
     
