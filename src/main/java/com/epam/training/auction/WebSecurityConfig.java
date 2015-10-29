@@ -6,6 +6,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebMvcSecurity
@@ -14,7 +16,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .antMatchers("/").permitAll()
+                .antMatchers("/", "/home", "/register").permitAll()
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
@@ -27,7 +29,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
-            .inMemoryAuthentication()
-                .withUser("user").password("password").roles("USER");
+        .inMemoryAuthentication()
+            .withUser("user").password("password").roles("USER");
     }
+    
+//    @Autowired
+//    public void configureGlobal(AuthenticationManagerBuilder auth, UserDetailsService userDetailsService, BCryptPasswordEncoder passwordEncoder) throws Exception {
+//        auth
+//        .inMemoryAuthentication()
+//            .withUser("user").password("password").roles("USER");
+//        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+//    }
 }

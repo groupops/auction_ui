@@ -29,6 +29,7 @@ targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 configurations {
@@ -46,6 +47,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-security")
     compile('org.apache.tomcat.embed:tomcat-embed-jasper')
     compile('javax.servlet:jstl')
+    compile('com.epam.training.auction:auction_common:1.0')
     providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
