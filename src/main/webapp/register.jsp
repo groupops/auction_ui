@@ -52,7 +52,7 @@
 			<table>
 				<tr>
 					<td>E-mail:</td>
-					<td><input type='text' name='email' value=''></td>
+					<td><input type='text' name='username' value=''></td>
 				</tr>
 				<tr>
 					<td>Password:</td>
