@@ -1,31 +1,60 @@
 package com.epam.training.auction.controllers.rest;
 
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import com.epam.training.auction.common.AuctionTransferObject;
+import com.epam.training.auction.common.AuctionsService;
+import com.epam.training.auction.common.BiddingService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Arrays;
-import java.util.List;
-
-/**
- * Created by Dmytro_Ulanovych on 10/27/2015.
- */
 @RestController
 public final class AuctionRESTController {
 
-    @RequestMapping(method = RequestMethod.GET, value = "/auctions")
-    public List<String> getAuctions() {
-        return Arrays.asList("Auction A", "Auction B", "Auction C");
-    }
+  @Autowired
+  private AuctionsService auctionsService;
 
-    @RequestMapping(method = RequestMethod.GET, value = "/auction/{auctionId}")
-    public String getAuction(@PathVariable Integer auctionId) {
-        return "Auction " + auctionId;
-    }
+  @Autowired
+  private BiddingService biddingService;
 
-    @RequestMapping(method = RequestMethod.POST, value = "/auction/{auctionId}/bid/{amount}")
-    public String doBid(@PathVariable Integer auctionId, @PathVariable Double amount) {
-        return "Auction " + auctionId + " bid = " + amount;
-    }
+  @RequestMapping(method = RequestMethod.GET, value = "/auctions")
+  public ModelAndView getAuctions() {
+    ModelAndView model = new ModelAndView();
+    model.addObject(this.auctionsService.getActiveAuctions());
+    model.setViewName("auctions");
+    return model;
+  }
+
+  @RequestMapping(value = "/auctions/add", method = RequestMethod.POST)
+  public ModelAndView addAuction(@ModelAttribute("auction") AuctionTransferObject auction) {
+    ModelAndView model = new ModelAndView();
+    model.addObject("auctionCreated", "Auction was successfuly created.");
+    model.setViewName("/auction/{auctionId}");
+    this.auctionsService.addAuction(auction);
+    return model;
+  }
+
+  @RequestMapping(method = RequestMethod.GET, value = "/auction/{auctionId}")
+  public ModelAndView getAuction(@PathVariable Long auctionId) {
+    ModelAndView model = new ModelAndView();
+    model.addObject(this.auctionsService.getAuctionById(auctionId));
+    return model;
+  }
+
+  @RequestMapping(method = RequestMethod.POST,
+      value = "/auction/{auctionId}/maxBid")
+  public ModelAndView maxBid(@PathVariable Long auctionId) {
+    ModelAndView model = new ModelAndView();
+    model.addObject(this.biddingService.getMaxBid(auctionId));
+    return model;
+  }
+
+  @RequestMapping(method = RequestMethod.POST,
+      value = "/auction/{auctionId}/bid/{amount}")
+  public String doBid(@PathVariable Long auctionId,
+                      @PathVariable Long amount,
+                      @PathVariable Long userId) {
+    this.biddingService.bid(auctionId, amount, userId);
+    return "/auction/{auctionId}";
+  }
+
 }
