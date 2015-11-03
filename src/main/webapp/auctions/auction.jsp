@@ -44,12 +44,24 @@
 </head>
 <body>
 
-Book information:
+<h1>Book information:</h1>
 
-<c:forEach items="${activeAuctions}" var="auction">
-    title: ${auction.title}
-    description: ${auction.description}
-</c:forEach>
+<b>Title: </b>${auction.title}
+<br>
+<b>Description: </b>${auction.description}
+<br><br>
+<b>Current Bid: </b> ${currentBid.bid}
+
+<form action="<c:url value='/auctions/bid' />" method='POST'>
+<input type="text" name="amount">
+<input type="hidden" name="auctionId" value="${auction.id}"/>
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+<input type="submit" value="bid">
+</form>
+
+<br><br>
+<span style="color:red">${message}</span>
+
 
 
 
