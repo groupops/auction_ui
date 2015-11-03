@@ -44,22 +44,14 @@
 </head>
 <body>
 
-<table id="activeAuctions">
-    <c:if test="${not empty activeAuctions}">
-    		<c:forEach items="${activeAuctions}" var="auction">
-              <tr>
-              <td>
-              <a href="<c:url value="/auctions/${auction.id}"/>">
-                    ${auction.title}
-                    </a>
-              </td>
-              <td>
-                    ${auction.description}
-              </td>
-              </tr>
-        </c:forEach>
-    </c:if>
-</table>
+Book information:
+
+<c:forEach items="${activeAuctions}" var="auction">
+    title: ${auction.title}
+    description: ${auction.description}
+</c:forEach>
+
+
 
 </body>
 </html>

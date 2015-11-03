@@ -34,7 +34,8 @@ public final class AuctionController {
     activeAuctions.add(AuctionTransferObject.getBuilder("Nothing", null).setId(
         2L)
         .setDescription("Some air").build());
-    activeAuctions.add(AuctionTransferObject.getBuilder("Gold bar", null).setId(3L)
+    activeAuctions.add(AuctionTransferObject.getBuilder("Gold bar", null).setId(
+        3L)
         .setDescription("Only 5$").build());
 
     model.addObject("activeAuctions", activeAuctions);
@@ -67,7 +68,8 @@ public final class AuctionController {
   @RequestMapping(method = RequestMethod.GET, value = "/{auctionId}")
   public ModelAndView getAuction(@PathVariable Long auctionId) {
     ModelAndView model = new ModelAndView();
-    model.addObject(this.auctionsService.getAuctionById(auctionId));
+    model.setViewName("auction");
+//    model.addObject(this.auctionsService.getAuctionById(auctionId));
     return model;
   }
 
