@@ -1,10 +1,10 @@
 package com.epam.training.auction.user;
 
-import java.util.Collection;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
 
 public final class CustomUserDetails extends User implements UserDetails {
 
@@ -21,11 +21,6 @@ public final class CustomUserDetails extends User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return AuthorityUtils.createAuthorityList("USER");
-    }
-
-    @Override
-    public String getUsername() {
-        return getUsername();
     }
 
     @Override
@@ -47,10 +42,4 @@ public final class CustomUserDetails extends User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
-    @Override
-    public String getPassword() {
-        return getPassword();
-    }
-
 }

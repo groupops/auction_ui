@@ -20,7 +20,7 @@ public final class AuthController {
     
     @RequestMapping(method = RequestMethod.GET, value = "/")
     public String auctions() {
-        return "auctions";
+       return "redirect:/home";
     }
     
     @RequestMapping(method = RequestMethod.GET, value = "/home")
