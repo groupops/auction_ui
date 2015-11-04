@@ -58,6 +58,8 @@ dependencies {
     compile("org.apache.camel:camel-spring:2.16.0")
     compile("org.apache.activemq:activemq-camel:5.12.1")
     compile("org.apache.activemq:activemq-pool:5.12.1")
+    compile("org.apache.activemq:activemq-kahadb-store:5.12.1")
+    compile("org.apache.activemq:activemq-broker:5.12.1")
     compile('com.epam.training.auction:auction_common:1.0')
     providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
     testCompile('org.springframework.boot:spring-boot-starter-test')
