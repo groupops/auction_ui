@@ -22,5 +22,7 @@
 		<br>
 		<a href="<c:url value="/register"/>">REGISTER</a>
 	</c:if>
+	<br>
+  <a href="<c:url value="/auctions"/>">AUCTIONS</a>
 </body>
 </html>
