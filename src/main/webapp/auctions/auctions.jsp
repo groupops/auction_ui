@@ -3,38 +3,10 @@
 <html>
 <head>
     <title>List of available auctions</title>
+    <link href="<c:url value="/css/basic.css" />" rel="stylesheet">
     <%@include file="../includes.jsp" %>
-
     <style>
-        #feedback {
-            font-size: 1.4em;
-        }
 
-        #auctions .ui-selecting {
-            background: #FECA40;
-        }
-
-        #auctions .ui-selected {
-            background: #F39814;
-            color: white;
-        }
-
-        #auctions {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            width: 450px;
-        }
-
-        #auctions li {
-            margin: 3px;
-            padding: 1px;
-            float: left;
-            width: 100px;
-            height: 80px;
-            font-size: 4em;
-            text-align: center;
-        }
     </style>
     <script>
         $(function () {

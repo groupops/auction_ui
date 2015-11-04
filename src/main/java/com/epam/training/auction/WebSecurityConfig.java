@@ -28,20 +28,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .logoutSuccessUrl("/home");
     }
-
-//    @Autowired
-//    public void configureGlobal(AuthenticationManagerBuilder auth) {
-//        try {
-//            auth
-//            .inMemoryAuthentication()
-//                .withUser("user").password("password").roles("USER");
-//        } catch (Exception e) {
-//            throw new AuctionConfigurationException("Couldn't setup AuthenticationManagerBuilder", e);
-//        }
-//    }
     
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth, UserDetailsService userDetailsService, BCryptPasswordEncoder passwordEncoder) {
+    public void configureAuthentication(AuthenticationManagerBuilder auth, UserDetailsService userDetailsService, BCryptPasswordEncoder passwordEncoder) {
         try {
             auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
         } catch (Exception e) {
