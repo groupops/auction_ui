@@ -1,24 +1,18 @@
 package com.epam.training.auction.service;
 
-import org.apache.camel.CamelContext;
+import com.epam.training.auction.common.UserTransferObject;
+import com.epam.training.auction.common.UsersService;
 import org.apache.camel.util.IOHelper;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.epam.training.auction.common.UserTransferObject;
-import com.epam.training.auction.common.UsersService;
-
 @Service
 public final class AuthServiceImpl implements AuthService {
-
-    private UsersService usersService;
-    
-//    @Autowired
-//    private CamelContext camelContext;
-    
+    private static final Logger LOG = Logger.getLogger(AuthServiceImpl.class);
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -27,15 +21,12 @@ public final class AuthServiceImpl implements AuthService {
         AbstractApplicationContext context = new ClassPathXmlApplicationContext("camel-client-remoting.xml");
         UsersService usersService = context.getBean("usersServiceImpl", UsersService.class);
 
-        System.out.println("Invoking the logging");
-        UserTransferObject userTransferObject = new UserTransferObject("user", "pass");
+        LOG.debug("Invoking the logging");
+        UserTransferObject userTransferObject = new UserTransferObject(username, bCryptPasswordEncoder.encode(password));
         usersService.addUser(userTransferObject);
-        System.out.println("User is logged");
+        LOG.debug("User is logged");
 
         IOHelper.close(context);
-
-        // usersService.addUser(new UserTransferObject(-1, username,
-        // bCryptPasswordEncoder.encode(password)));
     }
 
 }

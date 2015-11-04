@@ -5,14 +5,6 @@
     <title>List of available auctions</title>
     <link href="<c:url value="/css/basic.css" />" rel="stylesheet">
     <%@include file="../includes.jsp" %>
-    <style>
-
-    </style>
-    <script>
-        $(function () {
-            $("#auctions").selectable();
-        });
-    </script>
 </head>
 <body>
 

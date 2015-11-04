@@ -9,43 +9,40 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.epam.training.auction.service.AuthService;
 
-/**
- * Created by Dmytro_Ulanovych on 10/27/2015.
- */
 @Controller
 public final class AuthController {
-    
+
     @Autowired
     private AuthService authService;
-    
+
     @RequestMapping(method = RequestMethod.GET, value = "/")
     public String auctions() {
-       return "redirect:/home";
+        return "redirect:/home";
     }
-    
+
     @RequestMapping(method = RequestMethod.GET, value = "/home")
     public String index() {
         return "home";
     }
-    
+
     @RequestMapping(method = RequestMethod.GET, value = "/login")
     public String login() {
         return "login";
     }
-    
+
     @RequestMapping(method = RequestMethod.GET, value = "/register")
-    public String register(){
+    public String register() {
         return "register";
     }
-        
+
     @RequestMapping(method = RequestMethod.POST, value = "/register")
-    public ModelAndView register(@RequestParam String username,
-                                 @RequestParam String password) {
+    public ModelAndView register(@RequestParam String username, @RequestParam String password) {
         ModelAndView model = new ModelAndView();
+
         model.addObject("msg", "Success! You can login now.");
         model.setViewName("login");
         authService.registerUser(username, password);
-      
+
         return model;
     }
 }

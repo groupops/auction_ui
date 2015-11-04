@@ -1,5 +1,6 @@
 package com.epam.training.auction.service;
 
+import com.epam.training.auction.common.UserTransferObject;
 import com.epam.training.auction.common.UsersService;
 import com.epam.training.auction.user.CustomUserDetails;
 import com.epam.training.auction.user.User;
@@ -15,15 +16,12 @@ public final class UserDetailsServiceImpl implements UserDetailsService {
 
     private UsersService usersService;
 
-  @Autowired
-  BCryptPasswordEncoder encoder;
+    @Autowired
+    BCryptPasswordEncoder encoder;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        UserTransferObject transferedUser = usersService.getUserByName(username)
-//                .orElseThrow(() -> new UsernameNotFoundException(username));
-//
-//        return new CustomUserDetails(new User(transferedUser));
-      return new CustomUserDetails(new User(1, "user", encoder.encode("password")));
+         throw new UnsupportedOperationException();
     }
 
 }
