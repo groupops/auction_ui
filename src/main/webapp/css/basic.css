@@ -62,3 +62,13 @@
     float: none;
     margin: 0 auto;
 }
+
+.col-left {
+    float: left;
+    margin: 0 auto;
+}
+
+.col-right {
+    float: right;
+    margin: 0 auto;
+}
