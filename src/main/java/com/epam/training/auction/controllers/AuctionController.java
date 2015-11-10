@@ -65,13 +65,13 @@ public final class AuctionController {
         model.setViewName("auction");
         AuctionTransferObject auction = getBuilder("Example auction", null).setDescription("Hello. Is it me you're looking for?").setId(auctionId).build();
         model.addObject("auction", auction);
-        model.addObject(this.auctionsService.getAuctionById(auctionId));
+        model.addObject(auctionsService.getAuctionById(auctionId));
         return model;
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/bid")
     public String doBid(@RequestParam Long auctionId, @RequestParam Long amount, @AuthenticationPrincipal User currentUser, RedirectAttributes redirectAttrs) {
-        biddingService.bid(auctionId, amount, 0);
+        biddingService.bid(auctionId, amount, currentUser.getId());
         redirectAttrs.addFlashAttribute("auctionId", auctionId)
                 .addFlashAttribute("message", "There's no error actually but also there's no camel so I am faking this error message because nothing happened.");
         return "redirect:/auctions/" + auctionId;

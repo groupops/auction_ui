@@ -22,10 +22,11 @@ public final class RegistrationServiceImpl implements RegistrationService {
 
 
     @Override
-    public void registerUser(String username, String password) {
+    public boolean registerUser(String username, String password) {
         UserTransferObject userTransferObject = new UserTransferObject(username, passwordEncoder.encode(password));
         long id = usersService.addUser(userTransferObject);
         LOG.debug("Created a user with id " + id);
+        return id > 0;
     }
 
 }
