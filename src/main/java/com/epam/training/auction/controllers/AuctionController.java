@@ -1,8 +1,11 @@
 package com.epam.training.auction.controllers;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.epam.training.auction.common.AuctionTransferObject;
+import com.epam.training.auction.common.AuctionsService;
+import com.epam.training.auction.common.BiddingService;
+import com.epam.training.auction.common.UserTransferObject;
+import com.epam.training.auction.user.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,20 +15,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.epam.training.auction.common.AuctionTransferObject;
-import com.epam.training.auction.common.AuctionsService;
-import com.epam.training.auction.common.BiddingService;
-import com.epam.training.auction.common.UserTransferObject;
-import com.epam.training.auction.user.User;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.epam.training.auction.common.AuctionTransferObject.getBuilder;
 
 @Controller
 @RequestMapping(value = "/auctions")
 public final class AuctionController {
+    private final AuctionsService auctionsService;
+    private final BiddingService biddingService;
 
-    private AuctionsService auctionsService;
-    private BiddingService biddingService;
+    @Autowired
+    public AuctionController(AuctionsService auctionsService, BiddingService biddingService) {
+        this.auctionsService = auctionsService;
+        this.biddingService = biddingService;
+    }
 
     @RequestMapping(method = RequestMethod.GET, value = "/")
     public ModelAndView getAuctions() {
@@ -50,7 +55,7 @@ public final class AuctionController {
     public String addAuction(@RequestParam String title, @RequestParam String description, @AuthenticationPrincipal User currentUser) {
         UserTransferObject userTransferObject = new UserTransferObject(currentUser.getId(), currentUser.getUsername(), currentUser.getPassword());
         AuctionTransferObject auction = getBuilder(title, userTransferObject).setDescription(description).build();
-        //auctionsService.addAuction(auction);
+        auctionsService.addAuction(auction);
         return "redirect:/auctions";
     }
 
@@ -60,13 +65,13 @@ public final class AuctionController {
         model.setViewName("auction");
         AuctionTransferObject auction = getBuilder("Example auction", null).setDescription("Hello. Is it me you're looking for?").setId(auctionId).build();
         model.addObject("auction", auction);
-        // model.addObject(this.auctionsService.getAuctionById(auctionId));
+        model.addObject(auctionsService.getAuctionById(auctionId));
         return model;
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/bid")
     public String doBid(@RequestParam Long auctionId, @RequestParam Long amount, @AuthenticationPrincipal User currentUser, RedirectAttributes redirectAttrs) {
-        // biddingService.bid(auctionId, amount, 0);
+        biddingService.bid(auctionId, amount, currentUser.getId());
         redirectAttrs.addFlashAttribute("auctionId", auctionId)
                 .addFlashAttribute("message", "There's no error actually but also there's no camel so I am faking this error message because nothing happened.");
         return "redirect:/auctions/" + auctionId;

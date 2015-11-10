@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:camel="http://camel.apache.org/schema/spring" xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://camel.apache.org/schema/spring
+         http://camel.apache.org/schema/spring/camel-spring.xsd
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <bean id="jmsConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+        <property name="brokerURL" value="tcp://localhost:61616"/>
+    </bean>
+
+    <bean id="jmsConfig" class="org.apache.camel.component.jms.JmsConfiguration">
+        <property name="connectionFactory" ref="jmsConnectionFactory"/>
+        <property name="concurrentConsumers" value="10"/>
+        <!--        <property name="disableReplyTo" value="true"/>-->
+    </bean>
+
+    <bean id="activemq" class="org.apache.activemq.camel.component.ActiveMQComponent">
+        <property name="configuration" ref="jmsConfig"/>
+    </bean>
+
+    <bean id="userServiceProxy" name="userServiceProxy" class="org.apache.camel.spring.remoting.CamelProxyFactoryBean">
+        <property name="serviceUrl" value="activemq:queue:users"/>
+        <property name="serviceInterface" value="com.epam.training.auction.common.UsersService"/>
+    </bean>
+
+    <bean id="biddingServiceProxy" name="biddingServiceProxy"
+          class="org.apache.camel.spring.remoting.CamelProxyFactoryBean">
+        <property name="serviceUrl" value="activemq:queue:bids"/>
+        <property name="serviceInterface" value="com.epam.training.auction.common.BiddingService"/>
+    </bean>
+
+    <bean id="auctionsService" name="auctionsService" class="org.apache.camel.spring.remoting.CamelProxyFactoryBean">
+        <property name="serviceUrl" value="activemq:queue:auctions"/>
+        <property name="serviceInterface" value="com.epam.training.auction.common.AuctionsService"/>
+    </bean>
+
+    <camel:camelContext id="camel-1">
+        <camel:template id="producer"/>
+    </camel:camelContext>
+
+    <context:component-scan base-package="com.epam.training.auction"/>
+
+</beans>
