@@ -1,5 +1,6 @@
 package com.epam.training.auction.controllers;
 
+import com.epam.training.auction.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,13 +8,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.epam.training.auction.service.AuthService;
-
 @Controller
 public final class AuthController {
 
     @Autowired
-    private AuthService authService;
+    private RegistrationService registrationService;
 
     @RequestMapping(method = RequestMethod.GET, value = "/")
     public String auctions() {
@@ -23,11 +22,6 @@ public final class AuthController {
     @RequestMapping(method = RequestMethod.GET, value = "/home")
     public String index() {
         return "home";
-    }
-
-    @RequestMapping(method = RequestMethod.GET, value = "/login")
-    public String login() {
-        return "login";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/register")
@@ -41,7 +35,7 @@ public final class AuthController {
 
         model.addObject("msg", "Success! You can login now.");
         model.setViewName("login");
-        authService.registerUser(username, password);
+        registrationService.registerUser(username, password);
 
         return model;
     }
