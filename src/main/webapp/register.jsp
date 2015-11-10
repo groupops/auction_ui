@@ -6,8 +6,6 @@
     <title>Auction House</title>
 
     <link rel="stylesheet" type="text/css" media="screen" href='<c:url value="css/bootstrap.min.css"/>'/>
-    <link rel="stylesheet" type="text/css" media="screen" href='<c:url value="css/bootstrap-theme.min.css"/>'/>
-    <link rel="stylesheet" type="text/css" media="screen" href='<c:url value="css/.."/>'/>
     <link rel="stylesheet" type="text/css" media="screen" href='<c:url value="css/basic.css"/>'/>
 </head>
 <body>
@@ -36,10 +34,13 @@
                     <span class="input-group-addon glyphicon">#</span>
                     <input name="password" id="password" type="text" class="form-control" placeholder="Password">
                 </div>
+                <div class="input-group">
+                    <span class="input-group-addon glyphicon">#</span>
+                    <input name="password" id="confirmPassword" type="text" class="form-control" placeholder="Confirm password">
+                </div>
                 <div class="row col-md-6 col-center">
                     <div class="col-left">
-                        <button type="submit" class="btn btn-success">Sign up</button>
-                        <%--<a href="<c:url value="/"/>" class="btn btn-danger">Cancel</a>--%>
+                        <button type="submit" class="btn btn-success">Ok</button>
                     </div>
                     <div class="col-right">
                         <a href="<c:url value="/"/>" class="btn btn-danger">Cancel</a>

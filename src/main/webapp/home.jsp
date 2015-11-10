@@ -13,8 +13,7 @@
 
 	<div class="panel-primary navbar-header text-center col-center col-lg-8">
         <div class="panel-heading">
-            <h1 class="panel-title">HOME PAGE</h1>
-            This is index page with cool content.
+            <h1 class="panel-title">Auction home page</h1>
         </div>
         <div class="panel-body">
             <div class="col-sm-4 col-center">
@@ -31,7 +30,6 @@
                 </c:if>
 
                 <c:if test="${pageContext.request.userPrincipal.name == null}">
-                    <h3> <strong> You have to log in first. </strong> </h3>
                     <div class="col-sm-4 col-center">
                         <br>
                         <a href="<c:url value="/login"/>" class="btn btn-success btn-md active btn-block">Login</a>
