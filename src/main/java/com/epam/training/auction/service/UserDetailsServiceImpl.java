@@ -15,8 +15,12 @@ import org.springframework.stereotype.Service;
 
 @Service("userDetailsService")
 public final class UserDetailsServiceImpl implements UserDetailsService {
+    private final BCryptPasswordEncoder passwordEncoder;
+
     @Autowired
-    BCryptPasswordEncoder passwordEncoder;
+    public UserDetailsServiceImpl(BCryptPasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -28,5 +32,4 @@ public final class UserDetailsServiceImpl implements UserDetailsService {
         }
         return userDetails;
     }
-
 }

@@ -10,9 +10,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public final class AuthController {
+    private final RegistrationService registrationService;
 
     @Autowired
-    private RegistrationService registrationService;
+    public AuthController(RegistrationService registrationService) {
+        this.registrationService = registrationService;
+    }
 
     @RequestMapping(method = RequestMethod.GET, value = "/")
     public String auctions() {

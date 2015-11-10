@@ -10,11 +10,15 @@ import org.springframework.stereotype.Service;
 @Service
 public final class RegistrationServiceImpl implements RegistrationService {
     private static final Logger LOG = Logger.getLogger(RegistrationServiceImpl.class);
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+
+    private final BCryptPasswordEncoder passwordEncoder;
+    private final UsersService usersService;
 
     @Autowired
-    private UsersService usersService;
+    public RegistrationServiceImpl(BCryptPasswordEncoder passwordEncoder, UsersService usersService) {
+        this.passwordEncoder = passwordEncoder;
+        this.usersService = usersService;
+    }
 
 
     @Override
