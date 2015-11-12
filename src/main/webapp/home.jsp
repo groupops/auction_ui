@@ -3,7 +3,7 @@
 <html>
 <body>
 	<h1>HOME PAGE</h1>
-	This is index page with cool content.
+	Welcome to the Auctions Service.
 
 	<c:if test="${pageContext.request.userPrincipal.name != null}">
 		<h3>You are logged in. Welcome : ${pageContext.request.userPrincipal.name}</h3>
@@ -22,6 +22,10 @@
 		<br>
 		<a href="<c:url value="/register"/>">REGISTER</a>
 	</c:if>
+	<br>
+  <br>
+	<a href="<c:url value="/auctions/add"/>">ADD AUCTION</a>
+	<br>
 	<br>
   <a href="<c:url value="/auctions"/>">AUCTIONS</a>
 </body>

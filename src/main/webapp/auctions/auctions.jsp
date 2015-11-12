@@ -8,6 +8,10 @@
 </head>
 <body>
 
+<br>
+<a href="<c:url value="/auctions/add"/>">ADD AUCTION</a>
+<br>
+<br>
 <table id="activeAuctions">
     <c:if test="${not empty activeAuctions}">
     		<c:forEach items="${activeAuctions}" var="auction">
