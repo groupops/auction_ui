@@ -1,13 +1,11 @@
 package com.epam.training.auction.controllers;
 
-import com.epam.training.auction.common.AuctionTransferObject;
-import com.epam.training.auction.common.AuctionsService;
-import com.epam.training.auction.common.BiddingService;
-import com.epam.training.auction.common.UserTransferObject;
+import com.epam.training.auction.common.*;
 import com.epam.training.auction.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -71,7 +69,8 @@ public final class AuctionController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/bid")
     public String doBid(@RequestParam Long auctionId, @RequestParam Long amount, @AuthenticationPrincipal User currentUser, RedirectAttributes redirectAttrs) {
-        biddingService.bid(auctionId, amount, currentUser.getId());
+        UserBidTransferObject bidTransferObject = new UserBidTransferObject(new UserTransferObject(currentUser.getUsername(), currentUser.getPassword()),auctionId, amount);
+        biddingService.bid(bidTransferObject);
         redirectAttrs.addFlashAttribute("auctionId", auctionId)
                 .addFlashAttribute("message", "There's no error actually but also there's no camel so I am faking this error message because nothing happened.");
         return "redirect:/auctions/" + auctionId;
