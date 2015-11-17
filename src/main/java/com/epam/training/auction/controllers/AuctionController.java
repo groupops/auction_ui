@@ -5,11 +5,13 @@ import com.epam.training.auction.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.epam.training.auction.common.AuctionTransferObject.getBuilder;
@@ -17,12 +19,15 @@ import static com.epam.training.auction.common.AuctionTransferObject.getBuilder;
 @Controller
 @RequestMapping(value = "/auctions")
 public final class AuctionController {
+  private final UsersService usersService;
   private final AuctionsService auctionsService;
   private final BiddingService biddingService;
 
   @Autowired
-  public AuctionController(AuctionsService auctionsService,
+  public AuctionController(UsersService usersService,
+                           AuctionsService auctionsService,
                            BiddingService biddingService) {
+    this.usersService = usersService;
     this.auctionsService = auctionsService;
     this.biddingService = biddingService;
   }
@@ -31,8 +36,8 @@ public final class AuctionController {
   public ModelAndView getAuctions() {
     ModelAndView model = new ModelAndView();
 
-    List<AuctionTransferObject> activeAuctions = new ArrayList<>();
-    activeAuctions = auctionsService.getActiveAuctions();
+    List<AuctionTransferObject> activeAuctions =
+        auctionsService.getActiveAuctions();
 
     model.addObject("activeAuctions", activeAuctions);
     model.setViewName("auctions");
@@ -51,7 +56,7 @@ public final class AuctionController {
     UserTransferObject userTransferObject =
         new UserTransferObject(currentUser.getId(), currentUser.getUsername(),
             currentUser.getPassword());
-        AuctionTransferObject auction =
+    AuctionTransferObject auction =
         getBuilder(title, userTransferObject).setDescription(description)
             .build();
     auctionsService.addAuction(auction);
@@ -59,12 +64,18 @@ public final class AuctionController {
   }
 
   @RequestMapping(method = RequestMethod.GET, value = "/{auctionId}")
-  public ModelAndView getAuction(@PathVariable Long auctionId) {
+  public ModelAndView getAuction(@PathVariable Long auctionId,
+                                 @AuthenticationPrincipal User currentUser) {
     ModelAndView model = new ModelAndView();
     model.setViewName("auction");
-    AuctionTransferObject auction =
-        getBuilder("Example auction", null).setDescription(
-            "Hello. Is it me you're looking for?").setId(auctionId).build();
+    UserTransferObject userTransferObject =
+        new UserTransferObject(currentUser.getId(), currentUser.getUsername(),
+            currentUser.getPassword());
+    AuctionTransferObject auction = getBuilder(auctionsService
+        .getAuctionById(auctionId).getTitle(), userTransferObject)
+        .setDescription(
+            auctionsService.getAuctionById(auctionId).getDescription())
+        .setId(auctionId).build();
     model.addObject("auction", auction);
     model.addObject(auctionsService.getAuctionById(auctionId));
     return model;
@@ -75,7 +86,8 @@ public final class AuctionController {
                       @RequestParam UserTransferObject userTransferObject,
                       @AuthenticationPrincipal User currentUser,
                       RedirectAttributes redirectAttrs) {
-    biddingService.bid(new UserBidTransferObject(userTransferObject, auctionId, amount));
+    biddingService
+        .bid(new UserBidTransferObject(userTransferObject, auctionId, amount));
     redirectAttrs.addFlashAttribute("auctionId", auctionId)
         .addFlashAttribute("message",
             "There's no error actually but also there's no camel so I am faking this error message because nothing happened.");
