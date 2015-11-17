@@ -1,9 +1,6 @@
 package com.epam.training.auction.controllers;
 
-import com.epam.training.auction.common.AuctionTransferObject;
-import com.epam.training.auction.common.AuctionsService;
-import com.epam.training.auction.common.BiddingService;
-import com.epam.training.auction.common.UserTransferObject;
+import com.epam.training.auction.common.*;
 import com.epam.training.auction.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
@@ -35,15 +32,7 @@ public final class AuctionController {
     ModelAndView model = new ModelAndView();
 
     List<AuctionTransferObject> activeAuctions = new ArrayList<>();
-    activeAuctions
-        .add(getBuilder("Cool old shoes", null).setId(1L).setDescription(
-            "Stink a little").build());
-    activeAuctions.add(
-        getBuilder("Nothing", null).setId(2L).setDescription("Some air")
-            .build());
-    activeAuctions.add(
-        getBuilder("Gold bar", null).setId(3L).setDescription("Only 5$")
-            .build());
+    activeAuctions = auctionsService.getActiveAuctions();
 
     model.addObject("activeAuctions", activeAuctions);
     model.setViewName("auctions");
@@ -83,9 +72,10 @@ public final class AuctionController {
 
   @RequestMapping(method = RequestMethod.POST, value = "/bid")
   public String doBid(@RequestParam Long auctionId, @RequestParam Long amount,
+                      @RequestParam UserTransferObject userTransferObject,
                       @AuthenticationPrincipal User currentUser,
                       RedirectAttributes redirectAttrs) {
-    biddingService.bid(auctionId, amount, currentUser.getId());
+    biddingService.bid(new UserBidTransferObject(userTransferObject, auctionId, amount));
     redirectAttrs.addFlashAttribute("auctionId", auctionId)
         .addFlashAttribute("message",
             "There's no error actually but also there's no camel so I am faking this error message because nothing happened.");
