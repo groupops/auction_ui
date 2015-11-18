@@ -14,6 +14,8 @@
 <br>
 <b>Description: </b>${auction.description}
 <br><br>
+
+<c:if test="${auction.active}">
 <b>Current Bid: </b> ${currentBid.bid}
 
 <form action="<c:url value='/auctions/bid' />" method='POST'>
@@ -25,7 +27,7 @@
 
 <br><br>
 <span style="color:red">${message}</span>
-
+</c:if>
 
 </body>
 </html>

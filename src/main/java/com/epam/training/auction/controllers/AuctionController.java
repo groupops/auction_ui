@@ -60,7 +60,7 @@ public final class AuctionController {
         model.setViewName("auction");
         UserTransferObject userTransferObject = new UserTransferObject(currentUser.getId(), currentUser.getUsername(), currentUser.getPassword());
         AuctionTransferObject auction = getBuilder(auctionsService.getAuctionById(auctionId).getTitle(), userTransferObject)
-                .setDescription(auctionsService.getAuctionById(auctionId).getDescription()).setId(auctionId).build();
+                .setDescription(auctionsService.getAuctionById(auctionId).getDescription()).setId(auctionId).setIsActive(auctionsService.getAuctionById(auctionId).isActive()).build();
         model.addObject("auction", auction);
         model.addObject(auctionsService.getAuctionById(auctionId));
         return model;
