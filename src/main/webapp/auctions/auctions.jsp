@@ -12,6 +12,8 @@
 <a href="<c:url value="/auctions/add"/>">ADD AUCTION</a>
 <br>
 <br>
+<br>
+ACTIVE AUCTIONS<br>
 <table id="activeAuctions">
     <c:if test="${not empty activeAuctions}">
     		<c:forEach items="${activeAuctions}" var="auction">
@@ -27,7 +29,24 @@
               </tr>
         </c:forEach>
     </c:if>
-</table>
+</table><br>
 
+ARCHIVED AUCTIONS
+<table id="archivedAuctions">
+    <c:if test="${not empty archivedAuctions}">
+    		<c:forEach items="${archivedAuctions}" var="auction">
+              <tr>
+              <td>
+              <a href="<c:url value="/auctions/${auction.id}"/>">
+                    ${auction.title}
+                    </a>
+              </td>
+              <td>
+                    ${auction.description}
+              </td>
+              </tr>
+        </c:forEach>
+    </c:if>
+</table>
 </body>
 </html>

@@ -19,13 +19,11 @@ import static com.epam.training.auction.common.AuctionTransferObject.getBuilder;
 @Controller
 @RequestMapping(value = "/auctions")
 public final class AuctionController {
-    private final UsersService usersService;
     private final AuctionsService auctionsService;
     private final BiddingService biddingService;
 
     @Autowired
-    public AuctionController(UsersService usersService, AuctionsService auctionsService, BiddingService biddingService) {
-        this.usersService = usersService;
+    public AuctionController(AuctionsService auctionsService, BiddingService biddingService) {
         this.auctionsService = auctionsService;
         this.biddingService = biddingService;
     }
@@ -35,8 +33,10 @@ public final class AuctionController {
         ModelAndView model = new ModelAndView();
 
         List<AuctionTransferObject> activeAuctions = auctionsService.getActiveAuctions();
+        List<AuctionTransferObject> archivedAuctions = auctionsService.getArchivedAuctions();
 
         model.addObject("activeAuctions", activeAuctions);
+        model.addObject("archivedAuctions", archivedAuctions);
         model.setViewName("auctions");
         return model;
     }
