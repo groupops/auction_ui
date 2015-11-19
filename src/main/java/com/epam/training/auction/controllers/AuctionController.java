@@ -32,8 +32,8 @@ public final class AuctionController {
     public ModelAndView getAuctions() {
         ModelAndView model = new ModelAndView();
 
-        List<AuctionTransferObject> activeAuctions = auctionsService.getActiveAuctions();
-        List<AuctionTransferObject> archivedAuctions = auctionsService.getArchivedAuctions();
+        List<AuctionTransferObject> activeAuctions = auctionsService.getAuctionsWithActive(true);
+        List<AuctionTransferObject> archivedAuctions = auctionsService.getAuctionsWithActive(false);
 
         model.addObject("activeAuctions", activeAuctions);
         model.addObject("archivedAuctions", archivedAuctions);

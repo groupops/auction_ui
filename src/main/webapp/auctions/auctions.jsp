@@ -13,7 +13,7 @@
 <br>
 <br>
 <br>
-ACTIVE AUCTIONS<br>
+<b>Active auctions</b>
 <table id="activeAuctions">
     <c:if test="${not empty activeAuctions}">
     		<c:forEach items="${activeAuctions}" var="auction">
@@ -29,9 +29,11 @@ ACTIVE AUCTIONS<br>
               </tr>
         </c:forEach>
     </c:if>
-</table><br>
+</table>
+<br>
+<br>
 
-ARCHIVED AUCTIONS
+<b>Archived auctions</b>
 <table id="archivedAuctions">
     <c:if test="${not empty archivedAuctions}">
     		<c:forEach items="${archivedAuctions}" var="auction">
