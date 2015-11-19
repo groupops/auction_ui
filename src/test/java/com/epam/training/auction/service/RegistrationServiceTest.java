@@ -2,6 +2,7 @@ package com.epam.training.auction.service;
 
 import com.epam.training.auction.AuctionWebApplication;
 import com.epam.training.auction.common.UsersService;
+import com.epam.training.auction.user.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ import static org.junit.Assert.assertNotNull;
 public class RegistrationServiceTest {
 
     @Autowired
-    private RegistrationService registrationService;
+    private UserService userService;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
@@ -27,13 +28,19 @@ public class RegistrationServiceTest {
     
     @Test
     public void userAppearsInDatabaseAfterRegistration(){
-        registrationService.registerUser("Mateusz", "NotBreakablePassword");
+        User user = createUser("Mateusz", "NotBreakablePassword");
+        userService.save(user);
         assertNotNull(usersService.getUserByName("Mateusz"));
     }
     
     @Test
     public void passwordHashedCorrectly(){
-        registrationService.registerUser("Mateusz", "NotBreakablePassword");
+        User user = createUser("Mateusz", "NotBreakablePassword");
+        userService.save(user);
         assertEquals(bCryptPasswordEncoder.encode("NotBreakablePassword"), usersService.getUserByName("Mateusz").getPassword());
+    }
+
+    private User createUser(String name, String password) {
+        return new User(name, password);
     }
 }

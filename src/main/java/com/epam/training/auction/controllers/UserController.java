@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import javax.validation.Valid;
 
-@Controller
+@Controller("userController")
 public final class UserController {
+
     private final UserService userService;
 
     @Autowired
@@ -25,7 +26,7 @@ public final class UserController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/home")
-    public String index() {
+    public String homePage() {
         return "home";
     }
 
@@ -34,42 +35,19 @@ public final class UserController {
         return "register";
     }
 
-/*    @RequestMapping(method = RequestMethod.POST, value = "/register")
-    public ModelAndView register(@RequestParam String username, @RequestParam String password) {
-        ModelAndView model = new ModelAndView();
-
-        model.addObject("msg", "Success! You can login now.");
-        model.setViewName("login");
-        userService.save();
-
-        return model;
-    }*/
-
     @RequestMapping(value = "register", method = RequestMethod.POST)
     public String processRegistration(@Valid User user, Errors errors) {
         if (errors.hasErrors()) {
             return "register";
         }
+        // TODO : User returns Id. After user profile view will be implemented the return statement should return something like "redirect:/user/{id}"
         userService.save(user);
         return "redirect:/home";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/login")
-    public String loginPage(Model model) {
+    public String loginForm(Model model) {
         model.addAttribute(new User());
         return "login";
     }
-
-/*    @RequestMapping(value="/register", method=POST)
-    public String processRegistration(
-            @Valid Spitter spitter,
-            Errors errors) {
-        if (errors.hasErrors()) {
-            return "registerForm";
-        }
-
-        spitterRepository.save(spitter);
-        return "redirect:/spitter/" + spitter.getUsername();
-    }*/
 }
-

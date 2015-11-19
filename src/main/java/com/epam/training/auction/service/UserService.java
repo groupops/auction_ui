@@ -1,5 +1,7 @@
 package com.epam.training.auction.service;
 
+import com.epam.training.auction.user.User;
+
 public interface UserService {
-    boolean registerUser(String username, String password);
+    Long save(User user);
 }

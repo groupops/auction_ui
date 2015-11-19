@@ -8,8 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("userService")
 public final class UserServiceImpl implements UserService {
+
     private static final Logger LOG = Logger.getLogger(UserServiceImpl.class);
 
     private final BCryptPasswordEncoder passwordEncoder;
@@ -21,7 +22,6 @@ public final class UserServiceImpl implements UserService {
         this.usersService = usersService;
     }
 
-
     @Override
     public Long save(User user) {
         UserTransferObject userTransferObject = new UserTransferObject(
@@ -31,5 +31,4 @@ public final class UserServiceImpl implements UserService {
         LOG.debug("Created a user with id " + id);
         return id;
     }
-
 }
