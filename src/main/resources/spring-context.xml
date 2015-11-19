@@ -16,7 +16,6 @@
     <bean id="jmsConfig" class="org.apache.camel.component.jms.JmsConfiguration">
         <property name="connectionFactory" ref="jmsConnectionFactory"/>
         <property name="concurrentConsumers" value="10"/>
-        <!--        <property name="disableReplyTo" value="true"/>-->
     </bean>
 
     <bean id="activemq" class="org.apache.activemq.camel.component.ActiveMQComponent">
@@ -32,6 +31,7 @@
           class="org.apache.camel.spring.remoting.CamelProxyFactoryBean">
         <property name="serviceUrl" value="activemq:queue:bids"/>
         <property name="serviceInterface" value="com.epam.training.auction.common.BiddingService"/>
+        <property name="binding" value="false"/>
     </bean>
 
     <bean id="auctionsService" name="auctionsService" class="org.apache.camel.spring.remoting.CamelProxyFactoryBean">
