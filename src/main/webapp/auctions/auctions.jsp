@@ -26,6 +26,9 @@
               <td>
                     ${auction.description}
               </td>
+              <td>
+                    ${auction.createdAt}
+              </td>
               </tr>
         </c:forEach>
     </c:if>
@@ -45,6 +48,9 @@
               </td>
               <td>
                     ${auction.description}
+              </td>
+              <td>
+                    ${auction.createdAt}
               </td>
               </tr>
         </c:forEach>
