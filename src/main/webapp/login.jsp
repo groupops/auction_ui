@@ -25,11 +25,11 @@
             <form name='loginForm' action="<c:url value='login' />" method='POST'>
                 <div class="input-group">
                     <span class="input-group-addon glyphicon">@</span>
-                    <input name="login" id="login" type="text" class="form-control required-field" placeholder="User name (e-mail)">
+                    <input name="username" id="login" type="text" class="form-control required-field" placeholder="User name (e-mail)">
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon glyphicon">#</span>
-                    <input name="password" id="password" type="text" class="form-control" placeholder="Password">
+                    <input name="password" id="password" type="password" class="form-control" placeholder="Password">
                 </div>
 
                 <div class="row col-sm-0 col-center">

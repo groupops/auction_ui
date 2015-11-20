@@ -3,6 +3,7 @@ package com.epam.training.auction.service;
 import com.epam.training.auction.AuctionWebApplication;
 import com.epam.training.auction.common.UsersService;
 import com.epam.training.auction.user.User;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,14 +27,14 @@ public class RegistrationServiceTest {
     @Autowired
     private UsersService usersService;
     
-    @Test
+    @Test @Ignore
     public void userAppearsInDatabaseAfterRegistration(){
         User user = createUser("Mateusz", "NotBreakablePassword");
         userService.save(user);
         assertNotNull(usersService.getUserByName("Mateusz"));
     }
     
-    @Test
+    @Test @Ignore
     public void passwordHashedCorrectly(){
         User user = createUser("Mateusz", "NotBreakablePassword");
         userService.save(user);

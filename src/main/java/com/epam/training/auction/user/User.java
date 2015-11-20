@@ -16,7 +16,6 @@ public class User {
     }
 
     public User(UserTransferObject user) {
-        this.id = user.getId();
         this.username = user.getUsername();
         this.password = user.getPassword();
     }

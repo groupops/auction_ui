@@ -17,9 +17,21 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @ImportResource("classpath:spring-context.xml")
 @EnableWebMvcSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private UserDetailsService userDetailsService;
+
+    // TODO: investigate this it can handle users with Spring API
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+            .userDetailsService(userDetailsService);
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+            .csrf().disable()
             .authorizeRequests()
             .antMatchers("/auctions/add").authenticated()
             .antMatchers("/", "/home", "/register", "/auctions/*").permitAll()
@@ -28,6 +40,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .formLogin()
                 .loginProcessingUrl("/login")
                 .loginPage("/login")
+                // TODO: investigate this it can handle users with Spring API
+                .usernameParameter("username")
+                .passwordParameter("password")
                 .permitAll()
                 .and()
             .logout()
