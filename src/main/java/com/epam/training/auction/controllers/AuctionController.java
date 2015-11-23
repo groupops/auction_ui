@@ -33,12 +33,11 @@ public final class AuctionController {
     public ModelAndView getAuctions() {
         ModelAndView model = new ModelAndView();
 
-        List<AuctionTransferObject> activeAuctions = new ArrayList<>();
-        activeAuctions.add(getBuilder("Cool old shoes", null).setId(1L).setDescription("Stink a little").build());
-        activeAuctions.add(getBuilder("Nothing", null).setId(2L).setDescription("Some air").build());
-        activeAuctions.add(getBuilder("Gold bar", null).setId(3L).setDescription("Only 5$").build());
+        List<AuctionTransferObject> activeAuctions = auctionsService.getAuctionsWithActive(true);
+        List<AuctionTransferObject> archivedAuctions = auctionsService.getAuctionsWithActive(false);
 
         model.addObject("activeAuctions", activeAuctions);
+        model.addObject("archivedAuctions", archivedAuctions);
         model.setViewName("auctions");
         return model;
     }
@@ -57,10 +56,15 @@ public final class AuctionController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{auctionId}")
-    public ModelAndView getAuction(@PathVariable Long auctionId) {
+    public ModelAndView getAuction(@PathVariable Long auctionId, @AuthenticationPrincipal User currentUser) {
         ModelAndView model = new ModelAndView();
         model.setViewName("auction");
-        AuctionTransferObject auction = getBuilder("Example auction", null).setDescription("Hello. Is it me you're looking for?").setId(auctionId).build();
+        UserTransferObject userTransferObject = new UserTransferObject(currentUser.getId(), currentUser.getUsername(), currentUser.getPassword());
+        AuctionTransferObject auction = getBuilder(auctionsService.getAuctionById(auctionId).getTitle(), userTransferObject)
+                .setDescription(auctionsService.getAuctionById(auctionId).getDescription()).setId(auctionId)
+                .setIsActive(auctionsService.getAuctionById(auctionId).isActive())
+                .setCreatedAt(auctionsService.getAuctionById(auctionId).getCreatedAt())
+                .build();
         model.addObject("auction", auction);
         model.addObject(auctionsService.getAuctionById(auctionId));
         return model;
