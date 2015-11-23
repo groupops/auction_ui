@@ -8,43 +8,33 @@
     <link href="<c:url value="/css/basic.css" />" rel="stylesheet">
 </head>
 <body>
-<div id="login-box">
-
-    <div class="panel-primary navbar-header text-center col-center">
-        <div class="panel-heading">
-            <h1 class="panel-title">Log in</h1>
-        </div>
-        <div class="panel-body">
-            <c:if test="${not empty error}">
-                <div class="error">${error}</div>
-            </c:if>
-            <c:if test="${not empty msg}">
-                <div class="msg">${msg}</div>
-            </c:if>
-
-            <form name='loginForm' action="<c:url value='login' />" method='POST'>
-                <div class="input-group">
-                    <span class="input-group-addon glyphicon">@</span>
-                    <input name="username" id="login" type="text" class="form-control required-field" placeholder="User name (e-mail)">
-                </div>
-                <div class="input-group">
-                    <span class="input-group-addon glyphicon">#</span>
-                    <input name="password" id="password" type="password" class="form-control" placeholder="Password">
-                </div>
-
-                <div class="row col-sm-0 col-center">
-                    <div class="col-left">
-                        <button type="submit" class="btn btn-success">Ok</button>
-                    </div>
-                    <div class="col-right">
-                        <a href="<c:url value="/"/>" class="btn btn-danger">Cancel</a>
-                    </div>
-                </div>
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-            </form>
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Please sign in</h3>
+            </div>
+            <div class="panel-body">
+                <form accept-charset="UTF-8" role="form" name='loginForm' action="<c:url value='login'/>" method='POST'>
+                    <fieldset>
+                        <div class="form-group">
+                            <input class="form-control" placeholder="Login" name="login" type="text">
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" placeholder="Password" name="password" type="password" value="">
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input name="remember" type="checkbox" value="Remember Me"> Remember Me
+                            </label>
+                        </div>
+                        <input class="btn btn-lg btn-success btn-block" type="submit" value="Login">
+                    </fieldset>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                </form>
+            </div>
         </div>
     </div>
 </div>
-
 </body>
 </html>

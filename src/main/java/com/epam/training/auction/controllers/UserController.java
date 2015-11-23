@@ -5,19 +5,18 @@ import com.epam.training.auction.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import javax.validation.Valid;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller("userController")
 public final class UserController {
 
-    private final UserService userService;
+    private final UserService usersService;
 
     @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public UserController(UserService usersService) {
+        this.usersService = usersService;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/")
@@ -35,14 +34,18 @@ public final class UserController {
         return "register";
     }
 
-    @RequestMapping(value = "register", method = RequestMethod.POST)
-    public String processRegistration(@Valid User user, Errors errors) {
-        if (errors.hasErrors()) {
-            return "register";
+    @RequestMapping(method = RequestMethod.POST, value = "/register")
+    public String processRegistration(@RequestParam String login, @RequestParam String password, @RequestParam String confirmPassword) {
+        if (verifyPassword(password, confirmPassword)) {
+            long id = usersService.save(new User(login, password));
+            return "redirect:/user/" + id;
         }
-        // TODO : User returns Id. After user profile view will be implemented the return statement should return something like "redirect:/user/{id}"
-        userService.save(user);
-        return "redirect:/home";
+        //// TODO: 11/20/2015 info about invalid data
+        return "register";
+    }
+
+    private boolean verifyPassword(String password, String confirmPassword) {
+        return password != null && password.equals(confirmPassword);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/login")

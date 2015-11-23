@@ -11,6 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.DefaultRedirectStrategy;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 @EnableAutoConfiguration
@@ -24,34 +26,41 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     // TODO: investigate this it can handle users with Spring API
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-            .userDetailsService(userDetailsService);
+        auth.userDetailsService(userDetailsService);
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-            .csrf().disable()
-            .authorizeRequests()
-            .antMatchers("/auctions/add").authenticated()
-            .antMatchers("/", "/home", "/register", "/auctions/*").permitAll()
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/auctions/add").authenticated()
+                .antMatchers("/", "/home", "/register", "/auctions/*").permitAll()
                 .anyRequest().authenticated()
                 .and()
-            .formLogin()
+                .formLogin()
                 .loginProcessingUrl("/login")
                 .loginPage("/login")
-                // TODO: investigate this it can handle users with Spring API
-                .usernameParameter("username")
+                .successHandler(getLoginSuccessHandler())
+                .usernameParameter("login")
                 .passwordParameter("password")
                 .permitAll()
                 .and()
-            .logout()
+                .logout()
                 .permitAll()
                 .logoutSuccessUrl("/home");
     }
-    
+
+
+    private AuthenticationSuccessHandler getLoginSuccessHandler() {
+        return (request, response, authentication) -> {
+            new DefaultRedirectStrategy().sendRedirect(request, response, "/home");
+        };
+    }
+
     @Autowired
-    public void configureAuthentication(AuthenticationManagerBuilder auth, UserDetailsService userDetailsService, BCryptPasswordEncoder passwordEncoder) {
+    public void configureAuthentication(AuthenticationManagerBuilder auth, UserDetailsService
+            userDetailsService, BCryptPasswordEncoder passwordEncoder) {
         try {
             auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
         } catch (Exception e) {
