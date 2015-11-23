@@ -57,3 +57,18 @@
     -moz-border-radius: 2px;
     border: 1px solid #000;
 }
+
+.col-center {
+    float: none;
+    margin: 0 auto;
+}
+
+.col-left {
+    float: left;
+    margin: 0 auto;
+}
+
+.col-right {
+    float: right;
+    margin: 0 auto;
+}

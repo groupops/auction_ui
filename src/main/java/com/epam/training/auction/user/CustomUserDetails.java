@@ -10,12 +10,12 @@ public final class CustomUserDetails extends User implements UserDetails {
 
     private static final long serialVersionUID = -4261337858630172703L;
     
-    public CustomUserDetails(long id, String username, String password){
-        super(id, username, password);
+    public CustomUserDetails(String username, String password){
+        super(username, password);
     }
     
     public CustomUserDetails(User user){
-        super(user.getId(), user.getUsername(), user.getPassword());
+        super(user.getUsername(), user.getPassword());
     }
 
     @Override
