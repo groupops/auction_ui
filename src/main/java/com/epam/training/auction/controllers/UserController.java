@@ -1,8 +1,10 @@
 package com.epam.training.auction.controllers;
 
-import com.epam.training.auction.service.UserService;
+import com.epam.training.auction.common.UserTransferObject;
+import com.epam.training.auction.common.UsersService;
 import com.epam.training.auction.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,11 +14,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller("userController")
 public final class UserController {
 
-    private final UserService usersService;
+    private final UsersService usersService;
+    private final BCryptPasswordEncoder passwordEncoder;
+
 
     @Autowired
-    public UserController(UserService usersService) {
+    public UserController(UsersService usersService, BCryptPasswordEncoder passwordEncoder) {
         this.usersService = usersService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/")
@@ -37,7 +42,7 @@ public final class UserController {
     @RequestMapping(method = RequestMethod.POST, value = "/register")
     public String processRegistration(@RequestParam String login, @RequestParam String password, @RequestParam String confirmPassword) {
         if (verifyPassword(password, confirmPassword)) {
-            long id = usersService.save(new User(login, password));
+            long id = usersService.addUser(new UserTransferObject(login, passwordEncoder.encode(password)));
             return "redirect:/user/" + id;
         }
         //// TODO: 11/20/2015 info about invalid data
