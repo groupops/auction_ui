@@ -19,7 +19,9 @@
     <p>Sell what you do not need anymore</p>
     <p>Find book of your dream!</p>
 </div>
-
+<div>
+    <a class="btn btn-success" href="<c:url value="/auctions/add"/>">Add Auction</a>
+</div>
 <div class="container">
     <h2>Active auctions</h2>
 </div>
@@ -77,14 +79,6 @@
     </c:if>
     </tbody>
 </table>
-
-
-<br>
-<a href="<c:url value="/auctions/add"/>">ADD AUCTION</a>
-<br>
-<br>
-<br>
-
 
 <script type="text/javascript">
     $(document).ready(function () {
