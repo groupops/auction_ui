@@ -10,7 +10,6 @@
     <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/dataTables.bootstrap.min.js"></script>
-
 </head>
 <body style="padding: 50px">
 
@@ -20,8 +19,11 @@
     <p>Find book of your dream!</p>
 </div>
 <div>
-    <a class="btn btn-success" href="<c:url value="/auctions/add"/>">Add Auction</a>
+    <a id="add-auction-page" data-toggle="modal" target="#add-auction-form" class="btn btn-success"
+       href="<c:url value="/auctions/add"/>">Add
+        Auction</a>
 </div>
+
 <div class="container">
     <h2>Active auctions</h2>
 </div>
